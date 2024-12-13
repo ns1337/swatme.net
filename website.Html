@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>HOA OF RAPEME.NET</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background-color: #121212;
+            color: #fff;
+        }
+
+        header {
+            background-color: #1a1a1a;
+            padding: 20px;
+            text-align: center;
+            border-bottom: 1px solid #333;
+        }
+
+        header h1 {
+            font-size: 24px;
+            margin: 0;
+        }
+
+        nav {
+            display: flex;
+            justify-content: center;
+            background-color: #1a1a1a;
+            padding: 10px 0;
+        }
+
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: bold;
+        }
+
+        nav a:hover {
+            color: #ff0000;
+        }
+
+        .main-content {
+            padding: 20px;
+            text-align: center;
+        }
+
+        .main-content h2 {
+            margin-top: 0;
+        }
+
+        table {
+            width: 80%;
+            margin: 20px auto;
+            border-collapse: collapse;
+        }
+
+        table th, table td {
+            padding: 10px;
+            text-align: left;
+            border: 1px solid #333;
+        }
+
+        table th {
+            background-color: #2a2a2a;
+        }
+
+        table tr:nth-child(even) {
+            background-color: #1f1f1f;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            background-color: #1a1a1a;
+            border-top: 1px solid #333;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        footer a {
+            color: #ff0000;
+            text-decoration: none;
+        }
+
+        .add-paste-btn {
+            background-color: #31015e;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            border-radius: 5px;
+            margin: 20px auto;
+            display: block;
+        }
+
+        .add-paste-btn:hover {
+            background-color: #580417;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>HOA OF RAPEME.NET</h1>
+    </header>
+    <nav>
+        <a href="#">Home</a>
+        <a href="#">Request Member to be Added!</a>
+    </nav>
+    <div class="main-content">
+        <h2>Pinned Pastes</h2>
+        <button class="add-paste-btn" onclick="addPaste()">Add Paste</button>
+        <table id="pasteTable">
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Comments</th>
+                    <th>Views</th>
+                    <th>Created By</th>
+                    <th>Added</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><a href="page2.html" style="color: rgb(221, 135, 255); text-decoration: underline;">Jaida WIP LAST NAME 1</a></td>
+                    <td>5</td>
+                    <td>1234</td>
+                    <td>Admin</td>
+                    <td>Dec 10, 2024</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    <footer>
+        <p>Powered by <a href="#">Nigfa Host</a></p>
+    </footer>
+
+    <script>
+        let pasteCount = 1;
+
+        function addPaste() {
+            // Increment paste count
+            pasteCount++;
+
+            // Create new table row
+            const table = document.getElementById("pasteTable").querySelector("tbody");
+            const newRow = document.createElement("tr");
+
+            // Add cells with dynamic content
+            newRow.innerHTML = `
+                <td><a href="paste${pasteCount}.html" style="color: rgb(221, 135, 255); text-decoration: underline;">Paste ${pasteCount}</a></td>
+                <td>0</td>
+                <td>0</td>
+                <td>Anonymous</td>
+                <td>${new Date().toLocaleDateString()}</td>
+            `;
+
+            // Append new row to table
+            table.appendChild(newRow);
+
+            // Automatically generate new HTML page for the paste
+            generatePastePage(pasteCount);
+        }
+
+        function generatePastePage(pasteNumber) {
+            const blob = new Blob([
+                `
+                <!DOCTYPE html>
+                <html lang="en">
+                <head>
+                    <meta charset="UTF-8">
+                    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+                    <title>Paste ${pasteNumber}</title>
+                    <style>
+                        body {
+                            margin: 0;
+                            font-family: monospace;
+                            background-color: #121212;
+                            color: white;
+                            text-align: center;
+                            padding: 20px;
+                        }
+                        .ascii-art {
+                            white-space: pre-wrap;
+                            font-family: monospace;
+                            font-size: 14px;
+                            color: #f00;
+                        }
+                    </style>
+                </head>
+                <body>
+                    <h1>Paste ${pasteNumber}</h1>
+                    <div class="ascii-art">
+                        [YOUR ASCII ART HERE]
+                    </div>
+                    <p><a href="index.html" style="color: lightblue;">Go Back to Home</a></p>
+                </body>
+                </html>
+                `
+            ], { type: "text/html" });
+
+            // Download generated file
+            const link = document.createElement("a");
+            link.href = URL.createObjectURL(blob);
+            link.download = `paste${pasteNumber}.html`;
+            link.click();
+        }
+    </script>
+</body>
+</html>
